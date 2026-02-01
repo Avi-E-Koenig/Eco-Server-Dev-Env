@@ -1,0 +1,31 @@
+# Run from dev-files. Source = host folder where Eco server files live (nid: don't change target).
+# This repo: .. = Server root (EcoServer, linux64, Mods, Configs, Storage, WebClient).
+
+name: eco-dev
+
+services:
+  eco-server-environment:
+    container_name: eco-dev
+    image: nidaren/eco-server:environment
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    volumes:
+      # source = location on host where Eco is stored; target = DON'T modify (nidaren)
+      - type: bind
+        source: ..   # Server root (parent of dev-files); must contain EcoServer, linux64, Mods, Configs, Storage
+        target: /home/container/server
+    environment:
+      # ECO_TOKEN from .env is used as -userToken for Strange Cloud auth
+      ECO_TOKEN: ${ECO_TOKEN}
+      VERSION_BRANCH: ${VERSION_BRANCH:-public}
+      UPDATE_SERVER: ${UPDATE_SERVER:-true}
+      # true = steamcmd output to console (for debugging where it's stuck)
+      STEAM_FEEDBACK: ${STEAM_FEEDBACK:-true}
+    ports:
+      - "3000:3000/udp"   # GameServerPort (Network.eco)
+      - "3001:3001/tcp"   # WebServerPort
+      - "3002:3002/tcp"   # RconServerPort
+      - "3003:3003/udp"   # SteamServerPort (Network.eco)
