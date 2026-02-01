@@ -20,6 +20,7 @@ steamclient.so
 steamclient64.dll
 tier0_s64.dll
 vstdlib_s64.dll
+libsteam_api.so
 steam_appid.txt
 WebClient/
 
@@ -37,6 +38,7 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
 
 # Optional: uncomment to avoid tracking game __core__ (large; re-download with server)
 Mods/__core__/
