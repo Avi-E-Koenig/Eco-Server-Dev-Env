@@ -18,6 +18,8 @@ linux64/
 steamapps/
 steamclient.so
 steamclient64.dll
+tier0_s64.dll
+vstdlib_s64.dll
 steam_appid.txt
 WebClient/
 
