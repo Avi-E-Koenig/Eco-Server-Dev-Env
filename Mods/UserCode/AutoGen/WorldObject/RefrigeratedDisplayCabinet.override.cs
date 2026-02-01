@@ -49,6 +49,7 @@ namespace Eco.Mods.TechTree
 
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
+    [RequireComponent(typeof(LinkComponent))]
     [RequireComponent(typeof(CustomTextComponent))]
     [RequireComponent(typeof(PowerGridComponent))]
     [RequireComponent(typeof(PowerConsumptionComponent))]
@@ -72,12 +73,14 @@ namespace Eco.Mods.TechTree
             this.ModsPreInitialize();
             this.GetComponent<PowerConsumptionComponent>().Initialize(100);
             this.GetComponent<PowerGridComponent>().Initialize(10, new ElectricPower());
+            this.GetComponent<LinkComponent>().Initialize(5); // link to nearby stockpiles/chests
             this.GetComponent<CustomTextComponent>().Initialize(700);
             var storage = this.GetComponent<PublicStorageComponent>();
             storage.Initialize(36);
             storage.ShelfLifeMultiplier = 2.0f;
             storage.Storage.AddInvRestriction(new StackLimitRestriction(500));
             storage.Storage.AddInvRestriction(new NotCarriedRestriction()); // can't store block or large items
+            storage.Storage.AddInvRestriction(new FoodStorageRestriction()); // food only
             this.ModsPostInitialize();
         }
 
